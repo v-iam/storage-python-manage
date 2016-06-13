@@ -17,7 +17,7 @@ This sample explains how to manage your Storage account using the Azure Python S
     - [Get properties of an account](#get-properties)
     - [List storage accounts](#list-storage-accounts)
     - [Get the account keys](#get-keys)
-    - [Regenrate keys](#regenerate-keys)
+    - [Regenerate keys](#regenerate-keys)
     - [Delete an account](#delete-account)
 
 <a id="run"></a>
@@ -152,7 +152,7 @@ print('\tKey 2: {}'.format(storage_keys.key2))
 ```
 
 <a id="regenerate-keys"></a>
-### Regenrate a given key
+### Regenerate a given key
 
 ```python
 storage_keys = storage_client.storage_accounts.regenerate_key(GROUP_NAME, STORAGE_ACCOUNT_NAME, 'key1')
