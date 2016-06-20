@@ -19,13 +19,14 @@ This sample explains how to manage your Storage account using the Azure Python S
     - [Get the account keys](#get-keys)
     - [Regenerate keys](#regenerate-keys)
     - [Delete an account](#delete-account)
+- [More information](#more-info)
 
-<a id="run"></a>
+<a name="run"></a>
 ## Run this sample
 
 1. If you don't already have it, [install Python](https://www.python.org/downloads/).
 
-1. We recommend to use a [virtual environnement](https://docs.python.org/3/tutorial/venv.html) to run this example, but it's not mandatory. You can initialize a virtualenv this way:
+2. We recommend to use a [virtual environnement](https://docs.python.org/3/tutorial/venv.html) to run this example, but it's not mandatory. You can initialize a virtualenv this way:
 
     ```
     pip install virtualenv
@@ -34,25 +35,25 @@ This sample explains how to manage your Storage account using the Azure Python S
     source bin/activate
     ```
 
-1. Clone the repository.
+3. Clone the repository.
 
     ```
     git clone https://github.com/Azure-Samples/storage-python-manage.git
     ```
 
-1. Install the dependencies using pip.
+4. Install the dependencies using pip.
 
     ```
     cd storage-python-manage
     pip install -r requirements.txt
     ```
 
-1. Create an Azure service principal either through
-[Azure CLI](https://azure.microsoft.com/en-us/documentation/articles/resource-group-authenticate-service-principal-cli/),
-[PowerShell](https://azure.microsoft.com/en-us/documentation/articles/resource-group-authenticate-service-principal/)
-or [the portal](https://azure.microsoft.com/en-us/documentation/articles/resource-group-create-service-principal-portal/).
+5. Create an Azure service principal either through
+[Azure CLI](http://azure.microsoft.com/documentation/articles/resource-group-authenticate-service-principal-cli/),
+[PowerShell](http://azure.microsoft.com/documentation/articles/resource-group-authenticate-service-principal/)
+or [the portal](http://azure.microsoft.com/documentation/articles/resource-group-create-service-principal-portal/).
 
-1. Export these environment variables into your current shell. 
+6. Export these environment variables into your current shell. 
 
     ```
     export AZURE_TENANT_ID={your tenant id}
@@ -61,7 +62,7 @@ or [the portal](https://azure.microsoft.com/en-us/documentation/articles/resourc
     export AZURE_SUBSCRIPTION_ID={your subscription id}
     ```
 
-1. Run the sample.
+7. Run the sample.
 
     ```
     python example.py
@@ -80,7 +81,9 @@ from azure.mgmt.resource import ResourceManagementClient
 from azure.mgmt.storage import StorageManagementClient
 from azure.mgmt.storage.models import StorageAccountCreateParameters
 
-subscription_id = os.environ.get('AZURE_SUBSCRIPTION_ID', '11111111-1111-1111-1111-111111111111') # your Azure Subscription Id
+subscription_id = os.environ.get(
+    'AZURE_SUBSCRIPTION_ID',
+    '11111111-1111-1111-1111-111111111111') # your Azure Subscription Id
 credentials = ServicePrincipalCredentials(
     client_id=os.environ['AZURE_CLIENT_ID'],
     secret=os.environ['AZURE_CLIENT_SECRET'],
@@ -98,7 +101,7 @@ resource_group_params = {'location':'westus'}
 
 There are a couple of supporting functions (`print_item` and `print_properties`) that print a Azure object and it's properties.
 
-<a id="check-available"></a>
+<a name="check-available"></a>
 ### Check availability
 
 Check the availability and/or the validity of a given string as a storage account.
@@ -111,7 +114,7 @@ print('Reason: {}'.format(availability.reason))
 print('Detailed message: {}'.format(availability.message))
 ```
 
-<a id="create-account"></a>
+<a name="create-account"></a>
 ### Create a storage account
 
 ```python
@@ -126,7 +129,7 @@ storage_async_operation = storage_client.storage_accounts.create(
 storage_async_operation.wait()
 ```
 
-<a id="get-properties"></a>
+<a name="get-properties"></a>
 ### Get properties of a storage account
 
 ```python
@@ -134,7 +137,7 @@ storage_account = storage_client.storage_accounts.get_properties(
     GROUP_NAME, STORAGE_ACCOUNT_NAME)
 ```
 
-<a id="list-storage-accounts"></a>
+<a name="list-storage-accounts"></a>
 ### List storage accounts
 
 ```python
@@ -142,7 +145,7 @@ for item in storage_client.storage_accounts.list():
     print_item(item)
 ```
 
-<a id="get-keys"></a>
+<a name="get-keys"></a>
 ### Get the account keys
 
 ```python
@@ -151,7 +154,7 @@ print('\tKey 1: {}'.format(storage_keys.key1))
 print('\tKey 2: {}'.format(storage_keys.key2))
 ```
 
-<a id="regenerate-keys"></a>
+<a name="regenerate-keys"></a>
 ### Regenerate a given key
 
 ```python
@@ -159,9 +162,14 @@ storage_keys = storage_client.storage_accounts.regenerate_key(GROUP_NAME, STORAG
 print('\tNew key 1: {}'.format(storage_keys.key1))
 ```
 
-<a id="delete-account"></a>
+<a name="delete-account"></a>
 ### Delete a storage account
 
 ```python
 storage_client.storage_accounts.delete(GROUP_NAME, STORAGE_ACCOUNT_NAME)
 ```
+
+<a name="more-info"></a>
+## More information
+
+- [Azure SDK for Python](http://github.com/Azure/azure-sdk-for-python) 
