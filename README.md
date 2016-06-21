@@ -126,7 +126,7 @@ storage_async_operation = storage_client.storage_accounts.create(
         account_type='Standard_LRS'
     )
 )
-storage_async_operation.wait()
+storage_account = storage_async_operation.result()
 ```
 
 <a name="get-properties"></a>
@@ -150,16 +150,21 @@ for item in storage_client.storage_accounts.list():
 
 ```python
 storage_keys = storage_client.storage_accounts.list_keys(GROUP_NAME, STORAGE_ACCOUNT_NAME)
-print('\tKey 1: {}'.format(storage_keys.key1))
-print('\tKey 2: {}'.format(storage_keys.key2))
+storage_keys = {v.key_name: v.value for v in storage_keys.keys}
+print('\tKey 1: {}'.format(storage_keys['key1']))
+print('\tKey 2: {}'.format(storage_keys['key2']))
 ```
 
 <a name="regenerate-keys"></a>
 ### Regenerate a given key
 
 ```python
-storage_keys = storage_client.storage_accounts.regenerate_key(GROUP_NAME, STORAGE_ACCOUNT_NAME, 'key1')
-print('\tNew key 1: {}'.format(storage_keys.key1))
+storage_keys = storage_client.storage_accounts.regenerate_key(
+    GROUP_NAME,
+    STORAGE_ACCOUNT_NAME,
+    'key1')
+storage_keys = {v.key_name: v.value for v in storage_keys.keys}
+print('\tNew key 1: {}'.format(storage_keys['key1']))
 ```
 
 <a name="delete-account"></a>

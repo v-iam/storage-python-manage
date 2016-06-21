@@ -3,7 +3,12 @@ from haikunator import Haikunator
 from azure.common.credentials import ServicePrincipalCredentials
 from azure.mgmt.resource import ResourceManagementClient
 from azure.mgmt.storage import StorageManagementClient
-from azure.mgmt.storage.models import StorageAccountCreateParameters
+from azure.mgmt.storage.models import (
+    StorageAccountCreateParameters,
+    Sku,
+    SkuName,
+    Kind
+)
 
 WEST_US = 'westus'
 GROUP_NAME = 'azure-sample-group'
@@ -56,11 +61,13 @@ def run_example():
         GROUP_NAME,
         STORAGE_ACCOUNT_NAME,
         StorageAccountCreateParameters(
-            location='westus',
-            account_type='Standard_LRS'
+            sku=Sku(SkuName.standard_lrs),
+            kind=Kind.storage,
+            location='westus'
         )
     )
-    storage_async_operation.wait()
+    storage_account = storage_async_operation.result()
+    print_item(storage_account)
     print('\n\n')
 
     # Get storage account properties
@@ -79,14 +86,19 @@ def run_example():
     # Get the account keys
     print('Get the account keys')
     storage_keys = storage_client.storage_accounts.list_keys(GROUP_NAME, STORAGE_ACCOUNT_NAME)
-    print('\tKey 1: {}'.format(storage_keys.key1))
-    print('\tKey 2: {}'.format(storage_keys.key2))
+    storage_keys = {v.key_name: v.value for v in storage_keys.keys}
+    print('\tKey 1: {}'.format(storage_keys['key1']))
+    print('\tKey 2: {}'.format(storage_keys['key2']))
     print("\n\n")
 
     # Regenerate the account key 1
     print('Regenerate the account key 1')
-    storage_keys = storage_client.storage_accounts.regenerate_key(GROUP_NAME, STORAGE_ACCOUNT_NAME, 'key1')
-    print('\tNew key 1: {}'.format(storage_keys.key1))
+    storage_keys = storage_client.storage_accounts.regenerate_key(
+        GROUP_NAME,
+        STORAGE_ACCOUNT_NAME,
+        'key1')
+    storage_keys = {v.key_name: v.value for v in storage_keys.keys}
+    print('\tNew key 1: {}'.format(storage_keys['key1']))
     print("\n\n")
 
     # Delete the storage account
