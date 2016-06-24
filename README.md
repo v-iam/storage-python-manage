@@ -16,9 +16,12 @@ This sample explains how to manage your Storage account using the Azure Python S
     - [Create an account](#create-account)
     - [Get properties of an account](#get-properties)
     - [List storage accounts](#list-storage-accounts)
+    - [List storage accounts by resource group](#list-storage-accounts-rg)
     - [Get the account keys](#get-keys)
     - [Regenerate keys](#regenerate-keys)
+    - [Update storage account](#update-storage-account)
     - [Delete an account](#delete-account)
+    - [Usage](#usage)
 - [More information](#more-info)
 
 <a name="run"></a>
@@ -145,6 +148,14 @@ for item in storage_client.storage_accounts.list():
     print_item(item)
 ```
 
+<a name="list-storage-accounts-rf"></a>
+### List storage accounts by resource group
+
+```python
+for item in storage_client.storage_accounts.list_by_resource_group(GROUP_NAME):
+    print_item(item)
+```
+
 <a name="get-keys"></a>
 ### Get the account keys
 
@@ -167,11 +178,31 @@ storage_keys = {v.key_name: v.value for v in storage_keys.keys}
 print('\tNew key 1: {}'.format(storage_keys['key1']))
 ```
 
+<a name="update-storage-account"></a>
+### Update a storage account
+
+```python
+storage_account = storage_client.storage_accounts.update(
+    GROUP_NAME, STORAGE_ACCOUNT_NAME,
+    StorageAccountUpdateParameters(
+        sku=Sku(SkuName.standard_grs)
+    )
+)
+```
+
 <a name="delete-account"></a>
 ### Delete a storage account
 
 ```python
 storage_client.storage_accounts.delete(GROUP_NAME, STORAGE_ACCOUNT_NAME)
+```
+
+<a name="usage"></a>
+### List usage
+
+```python
+for usage in storage_client.usage.list().value:
+    print('\t{}'.format(usage.name.value))
 ```
 
 <a name="more-info"></a>

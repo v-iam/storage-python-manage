@@ -5,6 +5,7 @@ from azure.mgmt.resource import ResourceManagementClient
 from azure.mgmt.storage import StorageManagementClient
 from azure.mgmt.storage.models import (
     StorageAccountCreateParameters,
+    StorageAccountUpdateParameters,
     Sku,
     SkuName,
     Kind
@@ -83,6 +84,12 @@ def run_example():
         print_item(item)
     print("\n\n")
 
+    # List Storage accounts by resource group
+    print('List storage accounts by resource group')
+    for item in storage_client.storage_accounts.list_by_resource_group(GROUP_NAME):
+        print_item(item)
+    print("\n\n")
+
     # Get the account keys
     print('Get the account keys')
     storage_keys = storage_client.storage_accounts.list_keys(GROUP_NAME, STORAGE_ACCOUNT_NAME)
@@ -101,6 +108,17 @@ def run_example():
     print('\tNew key 1: {}'.format(storage_keys['key1']))
     print("\n\n")
 
+    # Update storage account
+    print('Update storage account')
+    storage_account = storage_client.storage_accounts.update(
+        GROUP_NAME, STORAGE_ACCOUNT_NAME,
+        StorageAccountUpdateParameters(
+            sku=Sku(SkuName.standard_grs)
+        )
+    )
+    print_item(storage_account)
+    print("\n\n")
+
     # Delete the storage account
     print('Delete the storage account')
     storage_client.storage_accounts.delete(GROUP_NAME, STORAGE_ACCOUNT_NAME)
@@ -112,6 +130,11 @@ def run_example():
     delete_async_operation.wait()
     print("Deleted: {}".format(GROUP_NAME))
     print("\n\n")
+
+    # List usage
+    print('List usage')
+    for usage in storage_client.usage.list().value:
+        print('\t{}'.format(usage.name.value))
 
 def print_item(group):
     """Print an Azure object instance."""
