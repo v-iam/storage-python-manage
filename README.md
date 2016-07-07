@@ -6,21 +6,22 @@ author: lmazuel
 
 # Managing Azure Storage with Python
 
-This sample explains how to manage your Storage account using the Azure Python SDK.
+This sample shows how to manage your storage account using the Azure Storage Resource Provider for Python. The Storage Resource Provider is a client library for working with the storage accounts in your Azure subscription. Using the client library, you can create a new storage account, read its properties, list all storage accounts in a given subscription or resource group, read and regenerate the storage account keys, and delete a storage account.  
+
 
 **On this page**
 
 - [Run this sample](#run)
 - [What is example.py doing?](#example)
-    - [Check availability](#check-available)
-    - [Create an account](#create-account)
-    - [Get properties of an account](#get-properties)
+    - [Check storage account name availability](#check-available)
+    - [Create a new storage account](#create-account)
+    - [Get the properties of an account](#get-properties)
     - [List storage accounts](#list-storage-accounts)
     - [List storage accounts by resource group](#list-storage-accounts-rg)
-    - [Get the account keys](#get-keys)
-    - [Regenerate keys](#regenerate-keys)
-    - [Update storage account](#update-storage-account)
-    - [Delete an account](#delete-account)
+    - [Get the storage account keys](#get-keys)
+    - [Regenerate a storage account key](#regenerate-keys)
+    - [Modify the storage account SKU](#update-storage-account)
+    - [Delete a storage account](#delete-account)
     - [Usage](#usage)
 - [More information](#more-info)
 
@@ -29,7 +30,7 @@ This sample explains how to manage your Storage account using the Azure Python S
 
 1. If you don't already have it, [install Python](https://www.python.org/downloads/).
 
-2. We recommend to use a [virtual environnement](https://docs.python.org/3/tutorial/venv.html) to run this example, but it's not mandatory. You can initialize a virtualenv this way:
+2. We recommend using a [virtual environment](https://docs.python.org/3/tutorial/venv.html) to run this example, but it's not mandatory. You can initialize a virtual environment this way:
 
     ```
     pip install virtualenv
@@ -74,8 +75,7 @@ or [the portal](http://azure.microsoft.com/documentation/articles/resource-group
 <a id="example"></a>
 ## What is example.py doing?
 
-The sample walks you through several storage management operations.
-It starts by setting up a ResourceManagementClient and StorageManagementClient objects using your subscription and credentials.
+The sample walks you through several Storage Resource Provider operations. It starts by setting up a ResourceManagementClient and StorageManagementClient objects using your subscription and credentials.
 
 ```python
 import os
@@ -102,10 +102,10 @@ It also sets up a ResourceGroup object (resource_group_params) to be used as a p
 resource_group_params = {'location':'westus'}
 ```
 
-There are a couple of supporting functions (`print_item` and `print_properties`) that print a Azure object and it's properties.
+There are a couple of supporting functions (`print_item` and `print_properties`) that print an Azure object and its properties.
 
 <a name="check-available"></a>
-### Check availability
+### Check storage account name availability
 
 Check the availability and/or the validity of a given string as a storage account.
 
@@ -118,7 +118,7 @@ print('Detailed message: {}'.format(availability.message))
 ```
 
 <a name="create-account"></a>
-### Create a storage account
+### Create a new storage account
 
 ```python
 storage_async_operation = storage_client.storage_accounts.create(
@@ -133,7 +133,7 @@ storage_account = storage_async_operation.result()
 ```
 
 <a name="get-properties"></a>
-### Get properties of a storage account
+### Get the properties of a storage account
 
 ```python
 storage_account = storage_client.storage_accounts.get_properties(
@@ -157,7 +157,7 @@ for item in storage_client.storage_accounts.list_by_resource_group(GROUP_NAME):
 ```
 
 <a name="get-keys"></a>
-### Get the account keys
+### Get the storage account keys
 
 ```python
 storage_keys = storage_client.storage_accounts.list_keys(GROUP_NAME, STORAGE_ACCOUNT_NAME)
@@ -167,7 +167,7 @@ print('\tKey 2: {}'.format(storage_keys['key2']))
 ```
 
 <a name="regenerate-keys"></a>
-### Regenerate a given key
+### Regenerate a storage account key
 
 ```python
 storage_keys = storage_client.storage_accounts.regenerate_key(
@@ -179,7 +179,7 @@ print('\tNew key 1: {}'.format(storage_keys['key1']))
 ```
 
 <a name="update-storage-account"></a>
-### Update a storage account
+### Modify the storage account SKU
 
 ```python
 storage_account = storage_client.storage_accounts.update(
@@ -209,3 +209,4 @@ for usage in storage_client.usage.list().value:
 ## More information
 
 - [Azure SDK for Python](http://github.com/Azure/azure-sdk-for-python) 
+- [Azure Storage Documentation](https://azure.microsoft.com/services/storage/)
