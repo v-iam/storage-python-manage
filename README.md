@@ -4,7 +4,7 @@ platforms: python
 author: lmazuel
 ---
 
-# # Getting Started with Azure Storage Resource Provider in Python
+# Getting Started with Azure Storage Resource Provider in Python
 
 This sample shows how to manage your storage account using the Azure Storage Resource Provider for Python. The Storage Resource Provider is a client library for working with the storage accounts in your Azure subscription. Using the client library, you can create a new storage account, read its properties, list all storage accounts in a given subscription or resource group, read and regenerate the storage account keys, and delete a storage account.  
 
