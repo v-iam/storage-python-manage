@@ -4,7 +4,7 @@ platforms: python
 author: lmazuel
 ---
 
-# Managing Azure Storage with Python
+# # Getting Started with Azure Storage Resource Provider in Python
 
 This sample shows how to manage your storage account using the Azure Storage Resource Provider for Python. The Storage Resource Provider is a client library for working with the storage accounts in your Azure subscription. Using the client library, you can create a new storage account, read its properties, list all storage accounts in a given subscription or resource group, read and regenerate the storage account keys, and delete a storage account.  
 
@@ -52,10 +52,10 @@ This sample shows how to manage your storage account using the Azure Storage Res
     pip install -r requirements.txt
     ```
 
-5. Create an Azure service principal either through
+5. Create an Azure service principal, using 
 [Azure CLI](http://azure.microsoft.com/documentation/articles/resource-group-authenticate-service-principal-cli/),
 [PowerShell](http://azure.microsoft.com/documentation/articles/resource-group-authenticate-service-principal/)
-or [the portal](http://azure.microsoft.com/documentation/articles/resource-group-create-service-principal-portal/).
+or [Azure Portal](http://azure.microsoft.com/documentation/articles/resource-group-create-service-principal-portal/).
 
 6. Export these environment variables into your current shell. 
 
@@ -181,6 +181,8 @@ print('\tNew key 1: {}'.format(storage_keys['key1']))
 <a name="update-storage-account"></a>
 ### Modify the storage account SKU
 
+The storage account SKU specifies what type of replication applies to the storage account. You can update the storage account SKU to change how the storage account is replicated, as shown in the sample:
+
 ```python
 storage_account = storage_client.storage_accounts.update(
     GROUP_NAME, STORAGE_ACCOUNT_NAME,
@@ -189,6 +191,9 @@ storage_account = storage_client.storage_accounts.update(
     )
 )
 ```
+
+Note that modifying the SKU for a production storage account may have associated costs. For example, if you convert a locally redundant storage account to a geo-redundant storage account, you will be charged for replicating your data to the secondary region. Before you modify the SKU for a production account, be sure to consider any cost implications. See [Azure Storage replication](https://azure.microsoft.com/documentation/articles/storage-redundancy/) for additional information about storage replication.
+
 
 <a name="delete-account"></a>
 ### Delete a storage account
