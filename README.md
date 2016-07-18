@@ -1,5 +1,5 @@
 ---
-services: azure-storage
+services: storage
 platforms: python
 author: lmazuel
 ---
