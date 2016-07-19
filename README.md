@@ -125,8 +125,9 @@ storage_async_operation = storage_client.storage_accounts.create(
     GROUP_NAME,
     STORAGE_ACCOUNT_NAME,
     StorageAccountCreateParameters(
-        location='westus',
-        account_type='Standard_LRS'
+        sku=Sku(SkuName.standard_ragrs),
+        kind=Kind.storage,
+        location='westus'
     )
 )
 storage_account = storage_async_operation.result()
