@@ -62,7 +62,7 @@ def run_example():
         GROUP_NAME,
         STORAGE_ACCOUNT_NAME,
         StorageAccountCreateParameters(
-            sku=Sku(SkuName.standard_lrs),
+            sku=Sku(SkuName.standard_ragrs),
             kind=Kind.storage,
             location='westus'
         )
