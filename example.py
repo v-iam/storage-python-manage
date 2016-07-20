@@ -42,6 +42,10 @@ def run_example():
     resource_client = ResourceManagementClient(credentials, subscription_id)
     storage_client = StorageManagementClient(credentials, subscription_id)
 
+    # You MIGHT need to add Storage as a valid provider for these credentials
+    # If so, this operation has to be done only once for each credentials
+    resource_client.providers.register('Microsoft.Storage')
+
     # Create Resource group
     print('Create Resource Group')
     resource_group_params = {'location':'westus'}
