@@ -15,10 +15,6 @@ WEST_US = 'westus'
 GROUP_NAME = 'azure-sample-group'
 STORAGE_ACCOUNT_NAME = Haikunator().haikunate(delimiter='')
 
-# Manage resources and resource groups - create, update and delete a resource group,
-# deploy a solution into a resource group, export an ARM template. Create, read, update
-# and delete a resource
-#
 # This script expects that the following environment vars are set:
 #
 # AZURE_TENANT_ID: with your Azure Active Directory tenant id or domain
