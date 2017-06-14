@@ -133,7 +133,7 @@ def run_example():
 
     # List usage
     print('List usage')
-    for usage in storage_client.usage.list().value:
+    for usage in storage_client.usage.list():
         print('\t{}'.format(usage.name.value))
 
 def print_item(group):
