@@ -2,4 +2,5 @@ azure-mgmt-resource>=0.30.0rc5
 azure-mgmt-storage>=0.30.0rc5
 azure-devtools~=0.3.0
 nose
+six
 haikunator
