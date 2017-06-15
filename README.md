@@ -207,7 +207,7 @@ storage_client.storage_accounts.delete(GROUP_NAME, STORAGE_ACCOUNT_NAME)
 ### List usage
 
 ```python
-for usage in storage_client.usage.list().value:
+for usage in storage_client.usage.list():
     print('\t{}'.format(usage.name.value))
 ```
 
