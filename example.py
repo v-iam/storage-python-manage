@@ -15,6 +15,18 @@ WEST_US = 'westus'
 GROUP_NAME = 'azure-sample-group'
 STORAGE_ACCOUNT_NAME = Haikunator().haikunate(delimiter='')
 
+
+def get_credentials():
+    subscription_id = os.environ.get(
+        'AZURE_SUBSCRIPTION_ID',
+        '11111111-1111-1111-1111-111111111111') # your Azure Subscription Id
+    credentials = ServicePrincipalCredentials(
+        client_id=os.environ['AZURE_CLIENT_ID'],
+        secret=os.environ['AZURE_CLIENT_SECRET'],
+        tenant=os.environ['AZURE_TENANT_ID']
+    )
+    return credentials, subscription_id
+
 # This script expects that the following environment vars are set:
 #
 # AZURE_TENANT_ID: with your Azure Active Directory tenant id or domain
@@ -27,14 +39,8 @@ def run_example():
     #
     # Create the Resource Manager Client with an Application (service principal) token provider
     #
-    subscription_id = os.environ.get(
-        'AZURE_SUBSCRIPTION_ID',
-        '11111111-1111-1111-1111-111111111111') # your Azure Subscription Id
-    credentials = ServicePrincipalCredentials(
-        client_id=os.environ['AZURE_CLIENT_ID'],
-        secret=os.environ['AZURE_CLIENT_SECRET'],
-        tenant=os.environ['AZURE_TENANT_ID']
-    )
+    credentials, subscription_id = get_credentials()
+
     resource_client = ResourceManagementClient(credentials, subscription_id)
     storage_client = StorageManagementClient(credentials, subscription_id)
 
