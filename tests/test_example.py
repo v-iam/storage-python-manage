@@ -2,6 +2,8 @@ import os
 import unittest
 from mock import patch
 
+from six.moves.urllib_parse import quote_plus
+
 from azure.common.credentials import BasicTokenAuthentication
 
 from azure_devtools.scenario_tests import (
@@ -9,6 +11,7 @@ from azure_devtools.scenario_tests import (
     GeneralNameReplacer,
     SubscriptionRecordingProcessor,
     patch_long_run_operation_delay,
+    RecordingProcessor,
 )
 
 import sys
@@ -56,6 +59,7 @@ class StorageExampleTest(ReplayableTest):
             ]
             for key, replacement in constants_to_scrub:
                 self.scrubber.register_name_pair(key, replacement)
+                self.scrubber.register_name_pair(quote_plus(key), replacement)
 
     @staticmethod
     def fake_credentials():
